@@ -1,8 +1,8 @@
-@extends('frontEnd.layouts.master') 
-@section('title',$category->subcategoryName) 
+@extends('frontEnd.layouts.master')
+@section('title',$category->subcategoryName)
 @push('css')
 <link rel="stylesheet" href="{{asset('public/frontEnd/css/jquery-ui.css')}}" />
-@endpush 
+@endpush
 @push('seo')
 <meta name="app-url" content="{{route('category',$category->slug)}}" />
 <meta name="robots" content="index, follow" />
@@ -25,7 +25,7 @@
 <meta property="og:image" content="{{asset($category->image)}}" />
 <meta property="og:description" content="{{ $category->meta_description}}" />
 <meta property="og:site_name" content="{{$category->subcategoryName}}" />
-@endpush 
+@endpush
 @section('content')
 <div class="bread_section">
     <div class="container">
@@ -79,14 +79,35 @@
                                 <input type="hidden" name="max_price" value="{{request()->get('max_price')}}" />
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
-                
+
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
+                @php
+                    // ইউটিউব ভিডিও আইডি বের করা
+                    $videoId = '';
+                    if (
+                        preg_match(
+                            '/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/|live\/))([\w-]+)/',
+                            $category->category_video,
+                            $matches,
+                        )
+                    ) {
+                        $videoId = $matches[1];
+                    }
+                @endphp
+
+                @if ($videoId)
+                    <iframe width="100%" height="350" src="https://www.youtube.com/embed/{{ $videoId }}"
+                        frameborder="0" allowfullscreen></iframe>
+                @endif
+            </div>
+            <div class="col-sm-12">
+
                 <div class="product_inner grid-container">
                     @foreach($products as $key=>$value)
                         <div class="product_item wist_item wow zoomIn" data-wow-duration="1.5s" data-wow-delay="0.5s">
@@ -102,7 +123,7 @@
                                     <img src="{{ asset($image->image) }}" alt="{{$value->name}}" />
                                 </a>
                                 @endif
-                                @endforeach 
+                                @endforeach
                                     <div class="quick_view_btn">
                                         <button data-id="{{$value->id}}" class="hover-zoom quick_view" title="Wishlist"><i class="fa-solid fa-magnifying-glass"></i></button>
                                         <button type="button" class="cart_store" data-id="{{$value->id}}"><i class="fas fa-shopping-basket"></i></button>
@@ -115,7 +136,7 @@
                                  <div class="product-image-desc">
                                     <div class="pro_des">
                                         <div class="product__size sort_single third-single four-single five-single six-single one-single two-single">
-                                            @foreach($value->prosizes as $sizes)                                
+                                            @foreach($value->prosizes as $sizes)
                                             <a class="size__item" data-size="{{ $sizes->size_id}}" onmouseover="activateSize(this)" href="{{ route('product',$value->slug) }}?size={{ $sizes->size_id }}">{{ $sizes->size ? $sizes->size->sizeName : '' }}</a>
                                             @endforeach
                                         </div>
@@ -150,7 +171,7 @@
             <div class="col-sm-12">
                 <div class="custom_paginate">
                     {{$products->links('pagination::bootstrap-4')}}
-                   
+
                 </div>
             </div>
         </div>
@@ -172,7 +193,7 @@
         if(savedTemplate === 'grid-container-1'){
             $('.changeGrid[data-template="1"]').addClass('active');
         } else if(savedTemplate === 'grid-container-2') {
-            $('.changeGrid[data-template="2"]').addClass('active');            
+            $('.changeGrid[data-template="2"]').addClass('active');
         } else if(savedTemplate === 'grid-container-3') {
             $('.changeGrid[data-template="3"]').addClass('active');
         } else if(savedTemplate === 'grid-container-4') {
@@ -242,7 +263,7 @@
 
                 // Update the href attribute
                 $(this).attr("href", newHref);
-             
+
             });
 
         }

@@ -18,8 +18,8 @@
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/select2.min.css')}}">
         <!-- toastr css -->
         <link rel="stylesheet" href="{{asset('public/backEnd/')}}/assets/css/toastr.min.css" />
-        
-        <link rel="stylesheet" href="{{asset('public/frontEnd/css/style.css?v=1.0.6')}}" />
+
+        <link rel="stylesheet" href="{{asset('public/frontEnd/css/style.css?v=1.0.7')}}" />
         <link rel="stylesheet" href="{{asset('public/frontEnd/css/responsive.css?v=1.0.6')}}" />
        {{-- @foreach($pixels as $pixel)
         <!-- Facebook Pixel Code -->
@@ -36,7 +36,7 @@
           fbq('track', 'PageView');
         </script>
         <noscript>
-          <img height="1" width="1" style="display:none" 
+          <img height="1" width="1" style="display:none"
                src="https://www.facebook.com/tr?id={{{$pixel->code}}}&ev=PageView&noscript=1"/>
         </noscript>
         <!-- End Facebook Pixel Code -->
@@ -113,7 +113,7 @@
                             <li class="parent-subcategory"><a href="{{route('discount','kids')}}" class="menu-subcategory-name">Kids</a></li>
                         </ul>
                     </li>
-                    <li class="menu-category-list"> 
+                    <li class="menu-category-list">
                         <a class="menu-category-link" href="{{url('/customer/login')}}">Login</a>
                     </li>
                 </ul>
@@ -175,7 +175,7 @@
                                 <ul>
                                     <li><a class="search_toggle"><i class="fas fa-search"></i></a></li>
                                     <li><a href="{{route('customer.wishlist')}}"><i class="far fa-heart"></i> <span class="wishlist-qty">{{Cart::instance('wishlist')->count()}}</span></li>
-                                   
+
                                     @if(Auth::guard('customer')->user())
                                     <li><a href="{{route('customer.account')}}"><i class="fas fa-user"></i></a></li>
                                     @else
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </header>
-        
+
         <main>
         <!-- header end -->
             @yield('content')
@@ -252,7 +252,7 @@
                                     <li><img class="footer-payment-image" src="{{asset('public/frontEnd/images/payment-logo.png')}}" /></li>
                                 </ul>
                                 <h4 class="regular-font font-monospace mt-3">
-                                    Hotline: 
+                                    Hotline:
                                     <a class=" call_now_btn" href="tel:{{$contact->hotline}}">
                                         <i class="fa fa-phone-square"></i>
                                         {{$contact->hotline}}
@@ -355,7 +355,7 @@
                 </li>
                 <li>
                     <a href="{{route('customer.wishlist')}}">
-                        <i class="far fa-heart"></i> 
+                        <i class="far fa-heart"></i>
                         <span class="wishlist-qty">{{Cart::instance('wishlist')->count()}}</span>
                     </a>
                 </li>
@@ -426,38 +426,38 @@
         @stack('script')
         <script>
             $('.quick_view').on('click',function(){
-            var id = $(this).data('id');  
-            $("#loading").show(); 
+            var id = $(this).data('id');
+            $("#loading").show();
             if(id){
                 $.ajax({
                    type:"GET",
                    data:{'id':id},
                    url:"{{route('quickview')}}",
-                   success:function(data){               
+                   success:function(data){
                     if(data){
                            $("#custom-modal").html(data);
                            $("#custom-modal").show();
                            $("#loading").hide();
-                           $("#page-overlay").show(); 
+                           $("#page-overlay").show();
                     }
                    }
                 });
-            }  
+            }
            });
         </script>
         <!-- quick view end -->
         <!-- wishlist js start -->
     <script>
         $('.wishlist_store').on('click',function(){
-        var id = $(this).data('id'); 
-        var qty = 1;   
+        var id = $(this).data('id');
+        var qty = 1;
         $("#loading").show();
         if(id){
             $.ajax({
                type:"GET",
                data:{'id':id,'qty':qty?qty:1},
                url:"{{route('wishlist.store')}}",
-               success:function(data){               
+               success:function(data){
                 if(data){
                     $("#loading").hide();
                     toastr.success('success', 'Product added in wishlist');
@@ -465,18 +465,18 @@
                 }
                }
             });
-         }  
+         }
        });
 
         $('.wishlist_remove').on('click',function(){
-        var id = $(this).data('id');   
+        var id = $(this).data('id');
         $("#loading").show();
         if(id){
             $.ajax({
                type:"GET",
                data:{'id':id},
                url:"{{route('wishlist.remove')}}",
-               success:function(data){               
+               success:function(data){
                 if(data){
                     $("#wishlist").html(data);
                     $("#loading").hide();
@@ -484,20 +484,20 @@
                 }
                }
             });
-         }  
+         }
        });
         function wishlist_count(){
             $.ajax({
                type:"GET",
                url:"{{route('wishlist.count')}}",
-               success:function(data){               
+               success:function(data){
                 if(data){
                     $(".wishlist-qty").html(data);
                 }else{
                    $(".wishlist-qty").empty();
                 }
                }
-            }); 
+            });
        };
     </script>
     <!-- wishlist js end -->
@@ -625,15 +625,15 @@
         <!-- cart js end -->
         <script>
             $('.compare_store').on('click',function(){
-            var id = $(this).data('id'); 
-            var qty = 1;  
+            var id = $(this).data('id');
+            var qty = 1;
             $("#loading").show();
             if(id){
                 $.ajax({
                    type:"GET",
                    data:{'id':id,'qty':qty?qty:1},
                    url:"{{route('compare.store')}}",
-                   success:function(data){               
+                   success:function(data){
                     if(data){
                         toastr.success('success', 'Product added in compare');
                         $("#loading").hide();
@@ -641,38 +641,38 @@
                     }
                    }
                 });
-             }  
+             }
            });
 
             $('.compare_remove').on('click',function(){
-            var id = $(this).data('id');   
+            var id = $(this).data('id');
             $("#loading").show();
             if(id){
                 $.ajax({
                    type:"GET",
                    data:{'id':id},
                    url:"{{route('compare.remove')}}",
-                   success:function(data){               
+                   success:function(data){
                     if(data){
                         $("#loading").hide();
                         //return compare_count();
                     }
                    }
                 });
-             }  
+             }
            });
             function compare_count(){
                 $.ajax({
                    type:"GET",
                    url:"{{route('compare.count')}}",
-                   success:function(data){               
+                   success:function(data){
                     if(data){
                         $(".compare-qty").html(data);
                     }else{
                        $(".compare-qty").empty();
                     }
                    }
-                }); 
+                });
            };
         </script>
         <!-- compare js end -->
@@ -703,19 +703,19 @@
                        type:"GET",
                        data:{'id':id},
                        url:"{{route('districts')}}",
-                       success:function(res){               
+                       success:function(res){
                         if(res){
                             $(".area").empty();
                             $(".area").append('<option value="">Select..</option>');
                             $.each(res,function(key,value){
                                 $(".area").append('<option value="'+key+'" >'+value+'</option>');
                             });
-                       
+
                         }else{
                            $(".area").empty();
                         }
                        }
-                    });  
+                    });
                });
         </script>
         <script>
@@ -745,7 +745,7 @@
                 $(".feature-products").removeClass("active");
                 $("#custom-modal").hide();
             });
-            
+
             $(".mobile-filter-toggle").on("click", function () {
                 $("#page-overlay").show();
                 $(".feature-products").addClass("active");
@@ -765,7 +765,7 @@
                 $(".parent-subcategory").each(function() {
                     const menuSubcatToggle = $(this).find(".menu-subcategory-toggle");
                     const thirdNav = $(this).find(".third-nav");
-    
+
                     menuSubcatToggle.on("click", function() {
                         menuSubcatToggle.toggleClass("active");
                         thirdNav.slideToggle("slow");
@@ -799,7 +799,7 @@
                 });
             });
         </script>
-        
+
         <!-- Messenger Chat Plugin Code -->
     <div id="fb-root"></div>
 
@@ -830,6 +830,6 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
-        
+
     </body>
 </html>
